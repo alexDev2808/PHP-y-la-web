@@ -1,14 +1,10 @@
 <?php
 
-$contacts = [
-  ["name" => "Pepe", "phone_number" => "1234535"],
-  ["name" => "Alexis", "phone_number" => "13455535"],
-  ["name" => "Antonio", "phone_number" => "3455535"],
-  ["name" => "Tania", "phone_number" => "12355435"],
-  ["name" => "Ruby", "phone_number" => "1455535"],
-  ["name" => "Fernanda", "phone_number" => "356455535"],
-  ["name" => "Martha", "phone_number" => "345553598"],
-]
+if(file_exists("contacts.json")) {
+  $contacts = json_decode(file_get_contents("contacts.json"), true);
+}else {
+  $contacts = [];
+}
 
 ?>
 
@@ -47,10 +43,10 @@ $contacts = [
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+                <a class="nav-link active" aria-current="page" href="./index.php">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="./add.html">Add Contact <ion-icon name="add-outline"></ion-icon></a>
+                <a class="nav-link" href="./add.php">Add Contact <ion-icon name="add-outline"></ion-icon></a>
               </li>
             </ul>   
           </div>
@@ -60,6 +56,14 @@ $contacts = [
       <main>
         <div class="container pt-4 p-3">
             <div class="row">
+              <?php if(count($contacts) == 0): ?>
+                <div class="col-md-4 mx-auto">
+                  <div class="card card-body text-center">
+                    <p>Sin contactos guardados aun...</p>
+                    <a href="./add.php">Agrega uno!!</a>
+                  </div>
+                </div>
+              <?php endif ?>
                 <?php foreach($contacts as $contact) : ?>
                   <div class="col-md-4 mb-3">
                     <div class="card text-center">

@@ -1,3 +1,32 @@
+
+<?php
+
+  if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $contact = [
+      "name" => $_POST["name"],
+      "phone" => $_POST["phone"],
+
+    ];
+
+    if(file_exists("contacts.json")) {
+      $contacts = json_decode(file_get_contents("contacts.json"), true);
+    }else {
+      $contacts = [];
+    }
+
+    $contacts[] = $contact;
+
+    file_put_contents( "contacts.json", json_encode($contacts) );
+
+    header("Location: index.php");
+  }
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,10 +60,10 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+                <a class="nav-link active" aria-current="page" href="./index.php">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="./add.html">Add Contact <ion-icon name="add-outline"></ion-icon></a>
+                <a class="nav-link" href="./add.php">Add Contact <ion-icon name="add-outline"></ion-icon></a>
               </li>
             </ul>   
           </div>
@@ -48,15 +77,15 @@
               <div class="card">
                 <div class="card-header">Add New Contact</div>
                 <div class="card-body">
-                  <form>
+                  <form method="POST" action="add.php">
                     <div class="mb-3">
-                      <label for="exampleInputName" class="form-label">Name</label>
-                      <input type="name" class="form-control" id="exampleInputName" aria-describedby="nameHelp">
+                      <label for="name" class="form-label">Name</label>
+                      <input type="text" class="form-control" id="name" aria-describedby="nameHelp" name="name">
                       <div id="nameHelp" class="form-text">Escribe tu nombre completo</div>
                     </div>
                     <div class="mb-3">
-                      <label for="exampleInputPhone" class="form-label">Phone Number</label>
-                      <input type="tel" class="form-control" id="exampleInputPhone">
+                      <label for="phone" class="form-label">Phone Number</label>
+                      <input type="tel" class="form-control" id="phone" name="phone">
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Submit</button>
