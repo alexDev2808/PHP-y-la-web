@@ -33,7 +33,7 @@
         ":phone" => $_POST["phone"]
       ]);
   
-      header("Location: index.php");
+      header("Location: home.php");
     }
 
   }
